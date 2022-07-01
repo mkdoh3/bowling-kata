@@ -4,9 +4,11 @@ RSpec.describe Game do
     let(:game) { Game.new }
 
     describe '#ninth_frame?' do
-        it 'returns true if turn is 8' do
-            game.turn = 8
-            expect(game.ninth_frame?).to be true
+        context 'when it is the 8th turn' do
+            it 'returns true' do
+                game.turn = 8
+                expect(game.ninth_frame?).to be true
+            end
         end
 
         it 'returns false if turn is not 8' do
