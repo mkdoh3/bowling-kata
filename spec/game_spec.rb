@@ -26,6 +26,7 @@ RSpec.describe Game do
                 expect(game.tenth_frame?).to be true
             end
         end
+
         context 'when it is not the 9th turn' do
             it 'returns false' do
                 game.turn = 1
@@ -41,6 +42,7 @@ RSpec.describe Game do
                 expect(game.normal_frame?).to be true
             end
         end
+
         context 'when the turn number is equal to or greater than 8' do
             it 'returns false' do
                 game.turn = 9
@@ -56,6 +58,7 @@ RSpec.describe Game do
                 expect(game.strike?).to be true
             end
         end
+
         context 'when the first roll of a frame is not 10' do
             it 'returns false' do
                 game.frames = [[1]]
@@ -71,6 +74,7 @@ RSpec.describe Game do
                 expect(game.spare?).to be true
             end
         end
+
         context 'when the sum of the first two rolls of a frame is not 10' do
             it 'returns false' do
                 game.frames = [[1, 1]]
@@ -172,7 +176,7 @@ RSpec.describe Game do
             end
         end
 
-         context "with a strike in every frame" do
+        context "with a strike in every frame" do
             it 'should return the correct score for the given frames' do
                 game.frames = [[10],[10],[10],[10],[10],[10],[10],[10],[10],[10,10,10]]
                 game.calculate_score
