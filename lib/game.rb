@@ -1,3 +1,5 @@
+require_relative 'calculator'
+
 class Game
     attr_accessor :score, :frames, :turn
 
@@ -20,22 +22,22 @@ class Game
     end
 
     def strike?
-        roll(1) === 10
+        Calculator.is_ten?(roll(1))
     end
 
     def spare?
-        roll(1) + roll(2) === 10
+        Calculator.is_ten?(roll(1) + roll(2))
     end
 
     def add_next_two_rolls
-        return @score += roll(2) + roll(3) if tenth_frame?
-        return @score += roll(1,1) +  roll(1,2) if roll(1,1) === 10 && normal_frame?
-        @score += roll(1,1) + roll(2,1)
+        return @score = Calculator.add_to_total(@score, roll(2), roll(3)) if tenth_frame?
+        return @score = Calculator.add_to_total(@score, roll(1,1), roll(1,2)) if Calculator.is_ten?(roll(1,1)) && normal_frame?
+        @score = Calculator.add_to_total(@score, roll(1,1), roll(2,1))
     end
 
     def add_next_roll
-        return @score += roll(3) if tenth_frame?
-        @score += roll(1,1)
+        return @score = Calculator.add_to_total(@score, roll(3)) if tenth_frame?
+        @score = Calculator.add_to_total(@score, roll(1,1))
     end
 
     def roll(ball, step = 0)
@@ -45,9 +47,9 @@ class Game
     def calculate_score
         frames.each_index do |index|
             @turn = index
-            @score += roll(1)
+            @score = Calculator.add_to_total(@score, roll(1))
             next add_next_two_rolls if strike?
-            @score += roll(2)
+            @score = Calculator.add_to_total(@score, roll(2))
             add_next_roll if spare?
         end
     end
