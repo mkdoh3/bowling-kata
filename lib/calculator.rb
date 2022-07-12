@@ -2,8 +2,8 @@ class Calculator
 
     def self.strike_values(current_frame, next_frame, third_frame, turn)
         return current_frame[1] + current_frame[2] if turn === 9
-        return next_frame[0].to_i + third_frame[0].to_i if next_frame[0].to_i === 10 && turn < 8
-        next_frame[0].to_i + next_frame[1].to_i
+        return next_frame[0] + third_frame[0] if next_frame[0] === 10 && turn < 8
+        next_frame[0] + next_frame[1]
     end
 
     def self.spare_value(current_frame, next_frame, turn)
