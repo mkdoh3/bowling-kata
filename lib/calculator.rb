@@ -1,21 +1,33 @@
 class Calculator
 
     def self.strike_values(current_frame, next_frame, third_frame, turn)
-        return current_frame[1] + current_frame[2] if turn === 9
-        return next_frame[0] + third_frame[0] if next_frame[0] === 10 && turn < 8
-        next_frame[0] + next_frame[1]
+        return second_roll(current_frame) + third_roll(current_frame) if turn === 9
+        return first_roll(next_frame) + first_roll(third_frame) if first_roll(next_frame) === 10 && turn < 8
+        first_roll(next_frame) + second_roll(next_frame)
     end
 
     def self.spare_value(current_frame, next_frame, turn)
-        return current_frame[2] if turn === 9
-        next_frame[0]
+        return third_roll(current_frame) if turn === 9
+        first_roll(next_frame)
+    end
+
+    def first_roll(frame)
+        frame[0]
+    end
+
+    def second_roll(frame)
+        frame[1]
+    end
+
+    def third_roll(frame)
+        frame[2]
     end
 
 
     def self.add_values(current_frame, next_frame, third_frame, turn)
-        frame_total = current_frame[0]
+        frame_total = first_roll(current_frame)
         return frame_total += strike_values(current_frame, next_frame, third_frame, turn) if frame_total === 10
-        frame_total += current_frame[1]
+        frame_total += second_roll(current_frame)
         return frame_total += spare_value(current_frame, next_frame, turn) if frame_total === 10
         frame_total
     end
